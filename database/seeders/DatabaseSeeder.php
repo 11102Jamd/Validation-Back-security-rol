@@ -24,7 +24,18 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('juan1234'),
-            'rol' => 'cajero',
+            'rol' => 'Cajero',
+        ]);
+
+        User::factory()->create([
+            'name1' => 'Juan',
+            'name2'=> 'Alejandro',
+            'surname1' => 'Muñoz',
+            'surname2' => 'Devia',
+            'email' => 'juanmunoz@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('juanmunoz1234'),
+            'rol' => 'Administrador',
         ]);
     }
 }
