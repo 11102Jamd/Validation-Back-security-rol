@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ManufacturingController\ManufacturingController;
 use App\Http\Controllers\OrderController\ProductController;
 use App\Http\Controllers\PurchaseController\InputController;
 use App\Http\Controllers\PurchaseController\PurchaseOrderController;
@@ -32,6 +33,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource('products', ProductController::class)->except(['index', 'show']);
     });
 
-    // Todos los autenticados pueden ver productos 
+    // Todos los autenticados pueden ver productos
     Route::apiResource('products', ProductController::class)->only(['index', 'show']);
 });
+Route::apiResource('suppliers', SupplierController::class);
+
+Route::apiResource('products', ProductController::class);
+
+Route::apiResource('manufacturing', ManufacturingController::class);
+
+Route::apiResource('inputs', InputController::class);
+
+Route::apiResource('purchase', PurchaseOrderController::class);
