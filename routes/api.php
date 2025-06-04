@@ -33,7 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource('users', UserController::class);
         Route::apiResource('suppliers', SupplierController::class);
         Route::apiResource('inputs', InputController::class);
-        Route::apiResource('purchase', PurchaseOrderController::class);
+        Route::apiResource('purchase', PurchaseOrderController::class)->except(['destroy']);
         Route::apiResource('products', ProductController::class)->except(['index', 'show']);
         Route::apiResource('order', OrderController::class)->except(['destroy']);
         Route::apiResource('manufacturing', ManufacturingController::class);
