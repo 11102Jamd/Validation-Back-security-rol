@@ -8,6 +8,7 @@ use App\Http\Controllers\PurchaseController\InputController;
 use App\Http\Controllers\PurchaseController\PurchaseOrderController;
 use App\Http\Controllers\PurchaseController\SupplierController;
 use App\Http\Controllers\UserController\UserController;
+use App\Models\PurchaseOrder\PurchaseOrder;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['is_cashier'])->group(function () {
         Route::apiResource('products', ProductController::class)->only(['index', 'show']);
         Route::apiResource('order', OrderController::class)->only(['index', 'store']);
+        Route::apiResource('purchase', PurchaseOrder::class)->only(['index','store']);
     });
 
     // Admins tienen acceso completo
@@ -35,6 +37,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource('products', ProductController::class)->except(['index', 'show']);
         Route::apiResource('order', OrderController::class)->except(['destroy']);
         Route::apiResource('manufacturing', ManufacturingController::class);
+    });
+
+
+    Route::middleware(['is_baker'])->group(function () {
+        Route::apiResource('manufacturing', ManufacturingController::class);
+        Route::apiResource('inputs', InputController::class)->only(['index', 'store', 'update']);
     });
 
     // Todos los autenticados pueden ver productos
