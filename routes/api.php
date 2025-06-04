@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ManufacturingController\ManufacturingController;
+use App\Http\Controllers\OrderController\OrderController;
 use App\Http\Controllers\OrderController\ProductController;
 use App\Http\Controllers\PurchaseController\InputController;
 use App\Http\Controllers\PurchaseController\PurchaseOrderController;
@@ -22,6 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Cajeros solo pueden ver productos
     Route::middleware(['is_cashier'])->group(function () {
         Route::apiResource('products', ProductController::class)->only(['index', 'show']);
+        Route::apiResource('order', OrderController::class)->only(['index', 'store']);
     });
 
     // Admins tienen acceso completo
@@ -31,17 +33,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource('inputs', InputController::class);
         Route::apiResource('purchase', PurchaseOrderController::class);
         Route::apiResource('products', ProductController::class)->except(['index', 'show']);
+        Route::apiResource('order', OrderController::class)->except(['destroy']);
+        Route::apiResource('manufacturing', ManufacturingController::class);
     });
 
     // Todos los autenticados pueden ver productos
     Route::apiResource('products', ProductController::class)->only(['index', 'show']);
 });
-Route::apiResource('suppliers', SupplierController::class);
 
+Route::apiResource('order', OrderController::class);
 Route::apiResource('products', ProductController::class);
-
-Route::apiResource('manufacturing', ManufacturingController::class);
-
-Route::apiResource('inputs', InputController::class);
-
-Route::apiResource('purchase', PurchaseOrderController::class);

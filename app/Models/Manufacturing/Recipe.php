@@ -48,6 +48,17 @@ class Recipe extends Model
             ->first();
     }
 
+    private function convertToOrderUnit(float $amountInGrams, string $orderUnit): float
+    {
+        switch ($orderUnit) {
+            case 'Kg':
+                return $amountInGrams / 1000;
+            case 'lb':
+                return $amountInGrams / 453.592;
+            default: // gramos
+                return $amountInGrams;
+        }
+    }
 
     public function priceQuantitySpent()
     {
@@ -66,13 +77,7 @@ class Recipe extends Model
             throw new \Exception("No se encontro el insumo asociado con su orden de compra");
         }
 
-        $amountInOrderUnit = $this->AmountSpent;
-
-        if ($inputOrder->UnitMeasurement === 'Kg') {
-            $amountInOrderUnit = $this->AmountSpent / 1000;
-        } elseif ($inputOrder->UnitMeasurement === 'lb') {
-            $amountInOrderUnit = $this->AmountSpent / 453.592;
-        }
+        $amountInOrderUnit = $this->convertToOrderUnit($this->AmountSpent, $inputOrder->UnitMeasurement);
 
         return round($amountInOrderUnit * $inputOrder->UnityPrice, 2);
     }
@@ -85,19 +90,5 @@ class Recipe extends Model
             $input->increment('CurrentStock', $this->AmountSpent);
         }
     }
-
-    // protected function convertToOrderUnit(float $amountInGrams, string $orderUnit): float
-    // {
-    //     switch ($orderUnit) {
-    //         case 'Kg':
-    //             return $amountInGrams / 1000;
-    //         case 'lb':
-    //             return $amountInGrams / 453.592;
-    //         default: // gramos
-    //             return $amountInGrams;
-    //     }
-    // }
-
-    // $amountInOrderUnit = $this->convertToOrderUnit($this->AmountSpent, $inputOrder->UnitMeasurement);
     // esta linea anterior va en el metodo pricequantitySpent
 }
