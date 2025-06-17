@@ -37,5 +37,27 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('juanmunoz1234'),
             'rol' => 'Administrador',
         ]);
+
+        User::factory()->create([
+            'name1' => 'Jaider',
+            'name2'=> 'Daniel',
+            'surname1' => 'Machado',
+            'surname2' => 'Caleño',
+            'email' => 'jaider@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('jaidermc12345'),
+            'rol' => 'Cajero',
+        ]);
+
+        User::factory()->create([
+            'name1' => 'Camilo',
+            'name2'=> 'Andres',
+            'surname1' => 'Paredes',
+            'surname2' => 'Castellanos',
+            'email' => 'camilo@hotmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('camilo1@23'),
+            'rol' => 'Panadero',
+        ]);
     }
 }
