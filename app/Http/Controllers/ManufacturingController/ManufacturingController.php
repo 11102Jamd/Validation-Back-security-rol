@@ -21,6 +21,20 @@ class ManufacturingController extends BaseCrudController
         'recipes.*.UnitMeasurement' => 'required|string|in:g,kg,lb'
     ];
 
+    public function show($id)
+    {
+        try {
+            $record = $this->model::with(["recipes","product"])->findOrFail($id);
+            return response()->json($record);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => 404,
+                "message" => $th->getMessage()
+            ], 404);
+        }
+    }
+
+
     public function store(Request $request)
     {
         DB::beginTransaction();
