@@ -38,4 +38,30 @@ class ProductController extends BaseCrudController
             ], 500);
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $validatedData = $this->validationRequest($request);
+
+            $product = $this->model::findOrFail($id);
+
+            if (isset($validatedData["InitialQuantity"]) && $validatedData["InitialQuantity"] != $product->InitialQuantity) {
+                $validatedData["CurrentStock"] = $validatedData['InitialQuantity'];
+            }
+
+            $product->update($validatedData);
+
+            return response()->json([
+                "message" => "Producto actualizado exitosamente",
+                "data" => $product,
+            ], 200);
+            
+        } catch (\Throwable $th) {
+            return response()->json([
+                "error" => "error al actualizar el producto",
+                "message" => $th->getMessage(),
+            ], 500);
+        }
+    }
 }

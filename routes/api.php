@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController\ProductController;
 use App\Http\Controllers\PurchaseController\InputController;
 use App\Http\Controllers\PurchaseController\PurchaseOrderController;
 use App\Http\Controllers\PurchaseController\SupplierController;
+use App\Http\Controllers\Reports\PurchaseOrderPdfController;
 use App\Http\Controllers\UserController\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,9 +48,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
      */
     Route::middleware(['is_baker'])->group(function () {
         Route::apiResource('manufacturing', ManufacturingController::class);
-        Route::apiResource('inputs', InputController::class)->only(['index', 'show','store', 'update']);
+        Route::apiResource('inputs', InputController::class)->only(['index', 'show', 'store', 'update']);
     });
 
     // Rutas comunes para todos los autenticados
     Route::apiResource('products', ProductController::class)->only(['index', 'show']);
 });
+
+Route::post('/purchase/exportPdf', [PurchaseOrderPdfController::class, 'exportPdf']);
