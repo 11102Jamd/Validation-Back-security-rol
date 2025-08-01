@@ -34,7 +34,6 @@ class PurchaseOrderPdfController extends Controller
                 ->orderBy('PurchaseOrderDate', 'desc')
                 ->get();
 
-            // Depuración: Verifica si hay órdenes
             if ($purchaseOrders->isEmpty()) {
                 Log::warning('No hay órdenes en el rango de fechas.');
                 return response()->json(['error' => 'No hay órdenes en el rango especificado.'], 404);
@@ -50,11 +49,15 @@ class PurchaseOrderPdfController extends Controller
                 'generatedAt' => now()->format('d/m/Y H:i'),
             ];
 
-            // Depuración: Verifica los datos antes de generar el PDF
-            Log::info('Datos para el PDF:', $data);
-
             $pdf = $this->pdfService->generatePdf('pdf.purchase-orders', $data);
-            return $pdf->stream('reporte-ordenes.pdf');
+
+            // Devuelve el PDF como una respuesta descargable
+            return response($pdf->output(), 200)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="reporte-ordenes.pdf"')
+                ->header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
+                ->header('Pragma', 'no-cache')
+                ->header('Expires', '0');
         } catch (\Throwable $th) {
             Log::error('Error al generar PDF:', [
                 'message' => $th->getMessage(),
