@@ -28,7 +28,7 @@ class Manufacturing extends Model
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'ID_product');
     }
 
     public function recipes(): HasMany

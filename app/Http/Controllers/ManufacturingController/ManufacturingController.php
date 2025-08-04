@@ -24,7 +24,7 @@ class ManufacturingController extends BaseCrudController
     public function show($id)
     {
         try {
-            $record = $this->model::with(["recipes","product"])->findOrFail($id);
+            $record = $this->model::with(["product","recipes.input"])->findOrFail($id);
             return response()->json($record);
         } catch (\Throwable $th) {
             return response()->json([
