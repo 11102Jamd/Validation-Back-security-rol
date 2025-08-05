@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('manufacturing', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ID_product')->constrained('product')->onDelete('cascade')->onUpdate('cascade');
+            $table->date('manufacturingDate');
             $table->integer('ManufacturingTime');
             $table->double('Labour',10,3);
             $table->double('ManufactureProductG',10,3);

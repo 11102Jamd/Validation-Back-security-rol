@@ -14,6 +14,7 @@ class Manufacturing extends Model
 
     protected $fillable = [
         'ID_product',
+        'manufacturingDate',
         'ManufacturingTime',
         'Labour',
         'ManufactureProductG',
@@ -21,6 +22,7 @@ class Manufacturing extends Model
     ];
 
     protected $attributes = [
+        'manufacturingDate'=> null,
         'Labour' => 0,
         'ManufactureProductG' => 0,
         'TotalCostProduction' => 0

@@ -14,6 +14,7 @@ class ManufacturingController extends BaseCrudController
     protected $model = Manufacturing::class;
     protected $validationRules = [
         'ID_product' => 'required|exists:product,id',
+        'manufacturingDate' => 'required|date',
         'ManufacturingTime' => 'required|integer|min:1',
         'recipes' => 'required|array|min:1',
         'recipes.*.ID_inputs' => 'required|exists:inputs,id',
@@ -43,6 +44,7 @@ class ManufacturingController extends BaseCrudController
 
             $manufacturing = $this->model::create([
                 'ID_product' => $validatedData['ID_product'],
+                'manufacturingDate' => $validatedData['manufacturingDate'],
                 'ManufacturingTime' => $validatedData['ManufacturingTime']
             ]);
 

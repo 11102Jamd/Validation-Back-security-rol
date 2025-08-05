@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController\ProductController;
 use App\Http\Controllers\PurchaseController\InputController;
 use App\Http\Controllers\PurchaseController\PurchaseOrderController;
 use App\Http\Controllers\PurchaseController\SupplierController;
+use App\Http\Controllers\Reports\ManufacturingPdfController;
 use App\Http\Controllers\Reports\PurchaseOrderPdfController;
 use App\Http\Controllers\UserController\UserController;
 use Illuminate\Support\Facades\Route;
@@ -56,3 +57,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::post('/purchase/exportPdf', [PurchaseOrderPdfController::class, 'exportPdf']);
+Route::post('/manufacturing/exportPdf', [ManufacturingPdfController::class, 'exportPdf']);
