@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 // Rutas compartidas para todos los autenticados
 Route::middleware(['auth:sanctum'])->group(function () {

@@ -9,21 +9,27 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureIsCashier
 {
     /**
-     * Handle an incoming request.
+     * Maneja una solicitud entrante y asegura que el usuario sea Cajero.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
+        //obtener al usuario autenticado si existe
         $user = $request->user();
 
+        //Si el usuario es administrador permite acceso sin restricciones
         if ($user && $user->isAdmin()) {
-            return $next($request); // Admins pueden todo
+            return $next($request);
         }
-        
+
+        //si hay un usuario que no es cajero, denegar acceso
         if (!$user || !$user->isCashier()) {
             abort($user ? 403 : 401, $user ? 'Acceso solo para cajeros' : 'No autenticado');
         }
+
+        //continua con la ejecucion si las validaciones son correctas
         return $next($request);
     }
 }
